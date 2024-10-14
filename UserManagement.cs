@@ -85,10 +85,27 @@ public class UserManagement
     }
 
 
-    /* public User loginUser(string u, string p)
+    public bool loginUser(string u, string p)
     {
-        
-    } */
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            string selectQuery = @" SELECT password FROM users WHERE username = @username;";
+            using(var command = new SqliteCommand(selectQuery, connection))
+            {
+                command.Parameters.AddWithValue("@username", u);
+                var storedPasswordHash = command.ExecuteScalar()?.ToString();
+
+                if (storedPasswordHash != null)
+                {
+                    // Verifierar lösenordet
+                    return BCrypt.Net.BCrypt.Verify(p, storedPasswordHash);
+                }
+            }
+        }
+        return false;
+    } 
 
     public List<User> getUsers()
     {
