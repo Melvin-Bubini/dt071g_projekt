@@ -26,7 +26,7 @@ public class UserManagement
                                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                                             username TEXT NOT NULL UNIQUE,
                                             password TEXT NOT NULL,
-                                            Balance REAL DEFAULT 0
+                                            balance REAL DEFAULT 1000
                                         );";
 
             using (var command = new SqliteCommand(createTableQuery, connection))
@@ -55,11 +55,7 @@ public class UserManagement
         User obj = new User();
         obj.Username = u;
 
-        // Kollar så att man inte har ett för enkelt lösenord
-        if (p.Length < 8)
-        {
-            throw new Exception("Lösenordet måste vara minst 8 tecken långt.");
-        }
+    
         // Krypterar lösenordet innan det sparas
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(p);
         obj.Password = hashedPassword;
