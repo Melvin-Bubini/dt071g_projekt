@@ -1,0 +1,14 @@
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\bin\Debug\net8.0\dt071g_projekt.exe
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\bin\Debug\net8.0\dt071g_projekt.deps.json
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\bin\Debug\net8.0\dt071g_projekt.runtimeconfig.json
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\bin\Debug\net8.0\dt071g_projekt.dll
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\bin\Debug\net8.0\dt071g_projekt.pdb
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\dt071g_projekt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\dt071g_projekt.AssemblyInfoInputs.cache
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\dt071g_projekt.AssemblyInfo.cs
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\dt071g_projekt.csproj.CoreCompileInputs.cache
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\dt071g_projekt.dll
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\refint\dt071g_projekt.dll
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\dt071g_projekt.pdb
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\dt071g_projekt.genruntimeconfig.cache
+C:\Users\melvi\OneDrive\Skrivbord\dt071g_projekt\obj\Debug\net8.0\ref\dt071g_projekt.dll
