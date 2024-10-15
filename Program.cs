@@ -11,8 +11,8 @@ class Program
 
         while (true)
         {
-            Console.Clear();
-            Console.WriteLine("V Ä L K O M M E N !\n");
+            clearAndShowTitle();
+            Console.WriteLine("V Ä L K O M M E N !");
             Console.WriteLine("L O G G A  I N / R E G I S T R E R A  D I G\n\n");
             Console.WriteLine("1. Registrera dig");
             Console.WriteLine("2. Logga in");
@@ -22,7 +22,7 @@ class Program
 
             if (string.IsNullOrEmpty(input))
             {
-                Console.Clear();
+                clearAndShowTitle();
                 Console.WriteLine("Du måste ange 1 eller 2!");
                 continue;
             }
@@ -32,14 +32,15 @@ class Program
                     while (true)
                     {
 
-                        Console.Clear();
+                        clearAndShowTitle();
                         Console.Write("Skriv ett användarnamn: ");
                         string? usernameInput = Console.ReadLine();
 
                         if (string.IsNullOrEmpty(usernameInput))
                         {
-                            Console.Clear();
+                            clearAndShowTitle();
                             Console.WriteLine("Du måste ange ett namn");
+                            Console.ReadKey();
                             continue;
                         }
 
@@ -47,8 +48,9 @@ class Program
                         Regex: ^[a-zA-ZåäöÅÄÖ]+$ tillåter endast bokstäver (inklusive svenska bokstäver)*/
                         if (!Regex.IsMatch(usernameInput, @"^[a-zA-ZåäöÅÄÖ\s]+$"))
                         {
-                            Console.Clear();
+                            clearAndShowTitle();
                             Console.WriteLine("Namnet får endast innehålla bokstäver. Försök igen.");
+                            Console.ReadKey();
                             continue;
                         }
 
@@ -57,23 +59,25 @@ class Program
 
                         if (string.IsNullOrEmpty(passwordInput))
                         {
-                            Console.Clear();
+                            clearAndShowTitle();
                             Console.WriteLine("Du måste ange ett lösenord");
+                            Console.ReadKey();
                             continue;
                         }
 
                         // Kollar så att man inte har ett för enkelt lösenord
                         if (passwordInput.Length < 8)
                         {
-                            Console.Clear();
+                            clearAndShowTitle();
                             Console.WriteLine("Lösenordet måste vara minst 8 tecken långt");
+                            Console.ReadKey();
                             continue;
                         }
 
                         userManagement.addUser(usernameInput, passwordInput);
 
                         // Bekräfta att användaren har registrerats och gå tillbaka till huvudmenyn
-                        Console.Clear();
+                        clearAndShowTitle();
                         Console.WriteLine("Registrering lyckades! Klicka på valfri tangent för att gå till huvudmenyn!");
                         Console.ReadKey();  // Väntar på att användaren trycker på en tangent innan de återvänder till huvudmenyn
 
@@ -84,14 +88,15 @@ class Program
                     while (true)
                     {
 
-                        Console.Clear();
+                        clearAndShowTitle();
                         Console.Write("Skriv ditt användarnamn: ");
                         string? usernameInput = Console.ReadLine();
 
                         if (string.IsNullOrEmpty(usernameInput))
                         {
-                            Console.Clear();
+                            clearAndShowTitle();
                             Console.WriteLine("Du måste ange ett namn");
+                            Console.ReadKey();
                             continue;
                         }
 
@@ -99,8 +104,9 @@ class Program
                         Regex: ^[a-zA-ZåäöÅÄÖ]+$ tillåter endast bokstäver (inklusive svenska bokstäver)*/
                         if (!Regex.IsMatch(usernameInput, @"^[a-zA-ZåäöÅÄÖ\s]+$"))
                         {
-                            Console.Clear();
+                            clearAndShowTitle();
                             Console.WriteLine("Namnet får endast innehålla bokstäver. Försök igen.");
+                            Console.ReadKey();
                             continue;
                         }
 
@@ -109,80 +115,116 @@ class Program
 
                         if (string.IsNullOrEmpty(passwordInput))
                         {
-                            Console.Clear();
+                            clearAndShowTitle();
                             Console.WriteLine("Du måste ange ett lösenord");
+                            Console.ReadKey();
                             continue;
                         }
 
                         if (userManagement.loginUser(usernameInput, passwordInput) == false)
                         {
-                            Console.WriteLine("Lösenord/Användarnamn är felaktigt");
+                            Console.WriteLine("Lösenord/Användarnamn är felaktigt, försök igen.");
+                            Console.ReadKey();
                             continue;
                         }
 
                         // När inloggningen lyckats, hämta och visa användarens saldo
-                        Console.Clear();
                         decimal balance = userBalance.GetBalance(usernameInput);
-                        Console.WriteLine($"Inloggad som {usernameInput}. Ditt saldo är: {balance} kr");
+                        bool isLoggedIn = true;
 
-                        Console.WriteLine("Vad vill du göra?");
-                        Console.WriteLine("1. Sätta in pengar");
-                        Console.WriteLine("2. Ta ut pengar");
-                        Console.WriteLine("X. Logga ut");
-                        Console.Write("Skriv 1, 2 eller X: ");
-                        string? action = Console.ReadLine();
-
-                        switch (action)
+                        while (isLoggedIn)
                         {
-                            case "1":
-                                Console.Write("Hur mycket vill du sätta in?\n ");
-                                try
-                                {
-                                    decimal insert = Convert.ToDecimal(Console.ReadLine());
-                                    balance += insert;
-                                    userBalance.updateBalance(usernameInput, balance);
-                                    Console.WriteLine($"Du har satt in {insert} kr. Nytt saldo: {balance} kr");
-                                    break;
-                                }
-                                catch (FormatException)
-                                {
-                                    Console.WriteLine("Ogiltigt belopp, försök igen.");
-                                    continue; // Gå tillbaka till insättningsmenyn
-                                }
 
+                            clearAndShowTitle();
+                            Console.WriteLine($"Inloggad som {usernameInput}. Ditt saldo är: {balance} kr\n");
+                            Console.WriteLine("Vad vill du göra?");
+                            Console.WriteLine("1. Sätta in pengar");
+                            Console.WriteLine("2. Ta ut pengar");
+                            Console.WriteLine("3. Radera användare");
+                            Console.WriteLine("X. Logga ut\n");
+                            Console.Write("Skriv 1, 2 eller X: ");
+                            string? action = Console.ReadLine();
 
-                            case "2":
-                                Console.WriteLine("Hur mycket vill du ta ut?\n ");
-                                try
-                                {
-                                    decimal withdrawal = Convert.ToDecimal(Console.ReadLine());
-                                    if (withdrawal > balance)
+                            switch (action)
+                            {
+                                case "1":
+                                    Console.Write("Hur mycket vill du sätta in?\n ");
+                                    try
                                     {
-                                        Console.WriteLine("Du har inte tillräckligt med pengar på ditt konto.");
+                                        decimal insert = Convert.ToDecimal(Console.ReadLine());
+                                        balance += insert;
+                                        userBalance.updateBalance(usernameInput, balance);
+                                        Console.WriteLine($"Du har satt in {insert} kr. Nytt saldo: {balance} kr");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        Console.WriteLine("Ogiltigt belopp, försök igen.");
+                                        Console.ReadKey();
+                                        continue; // Gå tillbaka till insättningsmenyn
+                                    }
+
+
+                                case "2":
+                                    Console.Write("Hur mycket vill du ta ut?\n ");
+                                    try
+                                    {
+                                        decimal withdrawal = Convert.ToDecimal(Console.ReadLine());
+                                        if (withdrawal > balance)
+                                        {
+                                            Console.WriteLine("Du har inte tillräckligt med pengar på ditt konto.");
+                                            Console.ReadKey();
+                                        }
+                                        else
+                                        {
+                                            balance -= withdrawal;
+                                            userBalance.updateBalance(usernameInput, balance);
+                                            Console.WriteLine($"Du har tagit ut {withdrawal} kr. Nytt saldo: {balance} kr");
+                                            Console.ReadKey();
+                                        }
+                                        break;
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        Console.WriteLine("Ogiltigt belopp, försök igen.");
+                                        Console.ReadKey();
+                                        continue; // Gå tillbaka till uttagsmenyn
+                                    }
+
+                                case "3":
+                                    clearAndShowTitle();
+                                    Console.WriteLine("Är du säker på att du vill radera användaren?\n 1. Ja\n 2.Nej");
+                                    string? deleteInput = Console.ReadLine();
+                                    if (deleteInput == "1")
+                                    {
+                                        userManagement.deleteUser(usernameInput);  // Raderar användaren om användaren valde "1"
+                                        Console.WriteLine("Användare raderad! Klicka på valfri tangent för att gå vidare");
+                                        Console.ReadKey();
+                                    }
+                                    else if (deleteInput == "2")
+                                    {
+                                        Console.WriteLine("Användaren har inte raderats.");
+                                        Console.ReadKey();
                                     }
                                     else
                                     {
-                                        balance -= withdrawal;
-                                        userBalance.updateBalance(usernameInput, balance);
-                                        Console.WriteLine($"Du har tagit ut {withdrawal} kr. Nytt saldo: {balance} kr");
+                                        Console.WriteLine("Ogiltigt val! Skriv 1 för ja eller 2 för nej!");
+                                        Console.ReadKey();
                                     }
                                     break;
-                                }catch (FormatException)
-                                {
-                                    Console.WriteLine("Ogiltigt belopp, försök igen.");
-                                    continue; // Gå tillbaka till uttagsmenyn
-                                }
-
-
-                            case "X":
-                            case "x":
-                                Console.Clear();
-                                Console.WriteLine("Du har loggat ut. Klicka på valfri tangent för att gå vidare");
-                                Console.ReadKey(); // Väntar på att användaren trycker på en tangent
-                                continue; // Gå tillbaka till huvudmenyn
-                            default:
-                                Console.WriteLine("Ogiltigt val, försök igen.");
-                                break;
+                                case "X":
+                                case "x":
+                                    clearAndShowTitle();
+                                    Console.WriteLine("Du har loggat ut. Klicka på valfri tangent för att gå vidare");
+                                    Console.ReadKey(); // Väntar på att användaren trycker på en tangent
+                                    isLoggedIn = false;  // Logga ut användaren
+                                    break;
+                                default:
+                                    Console.WriteLine("Ogiltigt val, försök igen.");
+                                    Console.ReadKey();
+                                    break;
+                            }
                         }
 
                         break;
@@ -198,4 +240,12 @@ class Program
             }
         }
     }
+
+    static void clearAndShowTitle() // Metod för att alltid visa bankens namn i konsollen
+    {
+        Console.Clear();
+        Console.WriteLine("B U B I N I  B A N K\n");
+    }
 }
+
+

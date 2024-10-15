@@ -103,6 +103,38 @@ public class UserManagement
         return false;
     } 
 
+    public void deleteUser( string u)
+    {
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            string deleteQuery = @"DELETE FROM users WHERE username = @username;";
+            using (var command = new SqliteCommand(deleteQuery, connection))
+            {
+                command.Parameters.AddWithValue("@username", u);
+
+                try
+                {
+                    int rowsUsed = command.ExecuteNonQuery();
+
+                    if (rowsUsed > 0)
+                    {
+                        Console.WriteLine("Användaren har tagits bort!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ingen användare hittades med det användarnamnet");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ett fel uppstod vid borttagning av användare {ex.Message}");
+                }
+            }
+        }
+    }
+
     public List<User> getUsers()
     {
         return users;
