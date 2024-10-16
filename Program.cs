@@ -24,6 +24,7 @@ class Program
             {
                 clearAndShowTitle();
                 Console.WriteLine("Du måste ange 1 eller 2!");
+                Console.ReadKey();
                 continue;
             }
             switch (input)
@@ -34,7 +35,7 @@ class Program
 
                         clearAndShowTitle();
                         Console.Write("Skriv ett användarnamn: ");
-                        string? usernameInput = Console.ReadLine();
+                        string? usernameInput = Console.ReadLine()?.Trim();
 
                         if (string.IsNullOrEmpty(usernameInput))
                         {
@@ -90,7 +91,7 @@ class Program
 
                         clearAndShowTitle();
                         Console.Write("Skriv ditt användarnamn: ");
-                        string? usernameInput = Console.ReadLine();
+                        string? usernameInput = Console.ReadLine()?.Trim();
 
                         if (string.IsNullOrEmpty(usernameInput))
                         {
@@ -176,6 +177,12 @@ class Program
                                             Console.WriteLine("Du har inte tillräckligt med pengar på ditt konto.");
                                             Console.ReadKey();
                                         }
+
+                                        else if (withdrawal > 10000)
+                                        {
+                                            Console.WriteLine($"Du kan max ta ut 10 000kr åt gången!");
+                                            Console.ReadKey();
+                                        }
                                         else
                                         {
                                             balance -= withdrawal;
@@ -216,7 +223,7 @@ class Program
                                 case "X":
                                 case "x":
                                     clearAndShowTitle();
-                                    Console.WriteLine("Du har loggat ut. Klicka på valfri tangent för att gå vidare");
+                                    Console.WriteLine("Du har loggat ut. Klicka på valfri tangent för återgå till menyn");
                                     Console.ReadKey(); // Väntar på att användaren trycker på en tangent
                                     isLoggedIn = false;  // Logga ut användaren
                                     break;
@@ -232,10 +239,17 @@ class Program
                     break;
                 case "X":
                 case "x":
-                    Console.WriteLine("Avslutar programmet.");
-                    return;  // Avslutar loopen och programmet
+                    Console.WriteLine("Är du säker på att du vill avsluta? (j/n)");
+                    if (Console.ReadLine()?.ToLower() == "j")
+                    {
+                        Console.WriteLine("Avslutar programmet.");
+                        Console.ReadKey();
+                        return;
+                    }
+                    break;
                 default:
                     Console.WriteLine("Ogiltigt val, försök igen.");
+                    Console.ReadKey();
                     break;
             }
         }
