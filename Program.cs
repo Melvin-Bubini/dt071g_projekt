@@ -123,11 +123,29 @@ class Program
                         }
 
                         if (userManagement.loginUser(usernameInput, passwordInput) == false)
-                        {
-                            Console.WriteLine("Lösenord/Användarnamn är felaktigt, försök igen.");
-                            Console.ReadKey();
-                            continue;
-                        }
+                {
+                    Console.WriteLine("Lösenord/Användarnamn är felaktigt\nVill du försöka igen eller vill du skapa ett konto först?");
+                    Console.WriteLine("1. Försök igen\n2. Skapa konto först (återgå till huvudmenyn)");
+                    Console.Write("Välj 1 eller 2: ");
+                    string? loginChoice = Console.ReadLine();
+
+                    if (loginChoice == "1")
+                    {
+                        // Försök igen 
+                        continue;
+                    }
+                    else if (loginChoice == "2")
+                    {
+                        // Återgår till huvudmenyn genom att bryta ut ur inloggningsloopen
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ogiltigt val! Försök igen.");
+                        Console.ReadKey();
+                        continue;
+                    }
+                }
 
                         // När inloggningen lyckats, hämta och visa användarens saldo
                         decimal balance = userBalance.GetBalance(usernameInput);
@@ -178,9 +196,9 @@ class Program
                                             Console.ReadKey();
                                         }
 
-                                        else if (withdrawal > 10000)
+                                        else if (withdrawal >= 1000)
                                         {
-                                            Console.WriteLine($"Du kan max ta ut 10 000kr åt gången!");
+                                            Console.WriteLine($"Du kan max ta ut 1000kr åt gången, av säkerhetsskäl!");
                                             Console.ReadKey();
                                         }
                                         else
@@ -201,13 +219,14 @@ class Program
 
                                 case "3":
                                     clearAndShowTitle();
-                                    Console.WriteLine("Är du säker på att du vill radera användaren?\n 1. Ja\n 2.Nej");
+                                    Console.WriteLine("Är du säker på att du vill radera användaren? (1 eller 2)\n 1. Ja\n 2.Nej");
                                     string? deleteInput = Console.ReadLine();
                                     if (deleteInput == "1")
                                     {
                                         userManagement.deleteUser(usernameInput);  // Raderar användaren om användaren valde "1"
-                                        Console.WriteLine("Användare raderad! Klicka på valfri tangent för att gå vidare");
+                                        Console.WriteLine("Klicka på valfri tangent för att gå vidare");
                                         Console.ReadKey();
+                                        isLoggedIn = false;  // Logga ut användaren
                                     }
                                     else if (deleteInput == "2")
                                     {
@@ -242,8 +261,7 @@ class Program
                     Console.WriteLine("Är du säker på att du vill avsluta? (j/n)");
                     if (Console.ReadLine()?.ToLower() == "j")
                     {
-                        Console.WriteLine("Avslutar programmet.");
-                        Console.ReadKey();
+                        Console.WriteLine("Programmet avslutat");
                         return;
                     }
                     break;
